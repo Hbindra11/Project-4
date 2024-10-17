@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Diary - Home</title>
+
     <!--<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">-->
+    <!--Link to the styles.css file for TailwindCSS styles-->
     <link rel="stylesheet" href="styles.css" />
+
+    <!--Link to the main Javascript file  for index.html functionality-->
     <script type="module" src="main.js"></script>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header section with a centered title-->
     <header class="p-5 bg-gray-800 text-white flex justify-center items-center">
         <h1 class="text-3xl font-bold">Movie Diary</h1>
     </header>
 
-    <!-- Navigation -->
+    <!-- Navigation bar with links to Home and Journal pages -->
     <nav class="bg-gray-800 text-white p-4">
         <div class="container mx-auto flex justify-between">
             <div class="ml-auto flex space-x-4">
@@ -25,7 +29,7 @@
         </div>
     </nav>
 
-    <!--Search Bar-->
+    <!--Search Bar for users to search for movies-->
     <section class="mt-6 container mx-auto">
         <h2 class="text-3xl font-bold text-center mb-4">Search for Movies</h2>
         <div class="flex justify-center">
@@ -34,7 +38,7 @@
         </div>
     </section>
 
-    <!-- Movie Container -->
+    <!-- Movie Container section where search results will be displayed -->
     <section class="mt-6 container mx-auto">
         <div id="movie-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Movie cards will be dynamically added here -->
