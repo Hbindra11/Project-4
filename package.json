@@ -1,8 +1,8 @@
 {
-  "name": "my-parcel-app",
+  "name": "movie-diary",
   "source": [
-    "index.html",
-    "./src/journal.html"
+    "src/index.html",
+    "src/journal.html"
   ],
   "scripts": {
     "dev": "parcel",
