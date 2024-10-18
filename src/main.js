@@ -56,29 +56,34 @@ function displayMovies(movies) {
     movies.forEach(movie => {
         //Creating a new div element for the movie card
         const movieDiv = document.createElement('div');
-        movieDiv.classList.add('movie-card');//Add a CSS class for styling
+        movieDiv.classList.add('movie-card', 'bg-white', 'rounded-lg', 'shadow-md', 'p-4', 'hover:shadow-lg', 'transition-shadow');//Add a CSS class for styling
 
         //Create the image element for the movie poster
         const posterPath = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 'placeholder-image-url';//Fallback if there's no poster
         const img = document.createElement('img');
         img.src = posterPath;
         img.alt = `${movie.title} Poster`;
+        img.classList.add('w-full', 'h-auto');//Ensure proper image sizing
 
         //Create a title element for the movie title
         const title = document.createElement('h2');
         title.textContent = movie.title;
+        title.classList.add('text-xl', 'font-bold', 'mt-4');
 
         //Create a paragraph for release date
         const releaseDate = document.createElement('p');
         releaseDate.textContent = `Release Date: ${movie.release_date || 'Unknown'}`;
+        releaseDate.classList.add('text-gray-600');
 
         //Create a paragraph for rating
         const rating = document.createElement('p');
         rating.textContent = `Rating: ${movie.vote_average || 'N/A'}`;
+        rating.classList.add('text-yellow-500', 'font-semibold');
 
         //Create a button to add movie to favorites
         const favoriteButton = document.createElement('button');
         favoriteButton.textContent = 'Add to Favorites';
+        favoriteButton.classList.add('bg-blue-500', 'text-white', 'py-2', 'px-4', 'rounded');
         favoriteButton.addEventListener('click', () => addToFavorites(movie));
 
         //Append all elements to the container
