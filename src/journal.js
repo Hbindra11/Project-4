@@ -1,11 +1,14 @@
+// URL for movie poster images
 const imgUrl = "https://image.tmdb.org/t/p/w500";
+// Select the movie list container
 const movieList = document.querySelector("#movie-list");
 
-//Display movies cards of the favourit movies chosen through the home page
+// Display movie cards of the favorite movies chosen on the home page
 const FavouriteMovies = JSON.parse(localStorage.getItem("favorites")) || [];
 
+// Iterate through each favorite movie
 for (const data of FavouriteMovies) {
-  //creating the favorite movie card element
+  // Create the favorite movie card element
   const movieCard = document.createElement("div");
   movieCard.classList.add(
     "basis-1/5",
@@ -17,12 +20,14 @@ for (const data of FavouriteMovies) {
     "bg-white",
     "rounded"
   );
-  //creating favorite movie image element to place inside the card
+
+  // Create the favorite movie image element to place inside the card
   const moviePoster = document.createElement("img");
   moviePoster.classList.add("w-full", "rounded");
   moviePoster.src = imgUrl + data.poster_path;
   moviePoster.alt = data.title;
-  //Creating the button element for adding notes through the favorite movie card
+
+  // Create the button element for adding notes through the favorite movie card
   const addNotesBtn = document.createElement("button");
   addNotesBtn.classList.add(
     "bg-gray-600",
@@ -34,58 +39,68 @@ for (const data of FavouriteMovies) {
   );
   addNotesBtn.textContent = "Add Notes";
 
-  //creating the favorite movie title element for the card
+  // Create the favorite movie title element for the card
   const movieTitle = document.createElement("div");
-  movieTitle.classList.add("text-lg", "font-bold", "pt-1", "italic");
+  movieTitle.classList.add("text-lg", "font-bold", "pt-1");
   movieTitle.innerText = data.title;
 
-  //creating the favorite movie element for placing the movie release data 
+  // Create the favorite movie element for displaying the movie release date
   const movieReleaseDate = document.createElement("div");
   movieReleaseDate.classList.add("text-base", "pb-0.5");
-  movieReleaseDate.innerText = "Realease Date: " + data.release_date;
+  movieReleaseDate.innerText = "Release Date: " + data.release_date;
 
-  //creating the favorite movie element for placing the movie rating
+  // Create the favorite movie element for displaying the movie rating
   const movieRating = document.createElement("div");
   movieRating.classList.add("text-yellow-500");
   movieRating.innerText = "Rating: " + data.vote_average;
 
-  //building the card as it should display
+  // Iterate through the notes array to display the notes for the favorite movie
+  const MyFavouriteMovieNotes =
+    JSON.parse(localStorage.getItem("MyNotes")) || [];
+  const movieNotes = document.createElement("div");
+  for (const note of MyFavouriteMovieNotes) {
+    if (note.noteTitle === data.title) {
+      movieNotes.classList.add("text-base", "pb-0.5", "italic");
+      movieNotes.innerText = movieNotes.innerText + " " + note.myNotes;
+    }
+  }
+  movieNotes.innerText = "My Notes: " + movieNotes.innerText;
+
+  // Build the card as it should be displayed
   movieList.appendChild(movieCard);
   movieCard.appendChild(moviePoster);
   movieCard.appendChild(movieTitle);
   movieCard.appendChild(movieReleaseDate);
   movieCard.appendChild(movieRating);
+  movieCard.appendChild(movieNotes);
   movieCard.appendChild(addNotesBtn);
 
-  //on the event of clicking the add notes button a window prompt to allow users to enter notes
+  // On the event of clicking the add notes button, show a prompt to allow users to enter notes
   addNotesBtn.addEventListener("click", () => {
     let notes = window.prompt(
-      "Please add your notes about your favourite movie: " +
+      "Please add your notes about your favorite movie: " +
         moviePoster.alt +
         " here: ",
       "your notes"
     );
-    //a check if  notes were entered
-    if (notes != "your notes" ) {
-      console.log(`my notes on ${moviePoster.alt} :` + notes);
-      // const obj = {title: data.Title, myNotes: notes};
-      // storeMyNotes (obj);
-    } 
-    
-    else {
-      console.log("no notes");
+    // Check if notes were entered
+    if (notes != "your notes") {
+      console.log(`My notes on ${moviePoster.alt}: ` + notes);
+      console.log("Testing notes: ", notes);
+      const obj = { noteTitle: moviePoster.alt, myNotes: notes };
+      const FavouriteMovieNotes =
+        JSON.parse(localStorage.getItem("MyNotes")) || [];
+      FavouriteMovieNotes.push(obj);
+      localStorage.setItem("MyNotes", JSON.stringify(FavouriteMovieNotes));
+      const link = document.createElement("a");
+      const paragraph = document.createElement("p");
+      link.classList.add("hover:underline");
+      link.innerText = "Click here to refresh screen to see your notes";
+      link.href = "journal.html";
+      movieCard.appendChild(paragraph);
+      movieCard.appendChild(link);
+    } else {
+      console.log("No notes");
     }
   });
 }
-
-// function to store notes
-
-// const storeMyNotes = (obj) => {
-//   const FavouriteMovieNotes =
-//       JSON.parse(localStorage.getItem("MyNotes")) || [];
-//     console.log(FavouriteMovieNotes);
-
-//    FavouriteMovieNotes.push(obj);
-//     localStorage.setItem("MyNotes", JSON.stringify(FavouriteMovieNotes));
-//  };
-
