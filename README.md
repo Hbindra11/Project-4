@@ -1,4 +1,4 @@
-# Project 4: Movie Diary App using TMDB API (source: LMS)
+# Project 3: Movie Diary App using TMDB API (source: LMS)
 
 ## Description: 
 Create a movie diary using the TMDB API.
@@ -20,9 +20,9 @@ Create a navbar in both pages to navigate back and forth between the homepage an
 #### Styling:
 Use TailwindCSS for styling.
 
-#### Refactor the Movie diaries App:
+### Project 4: Refactor the Movie diaries App:
  Refactoring is the process of improving the internal structure, readability, and maintainability of a software codebase without altering its external behavior or functionality. So, we what to fix existing bugs, handling errors and exepctions more elegantly and improve readability, from adding comments that properly describe our logic to organising our code in a better way. Out there, in a real job, a product’s development doesn’t end with its launch, not only new features will be added but, perhaps more importantly, existing ones will be improved.
- #### Focus on:
+#### Focus on:
 - Adding comprehensive comments
 - Fixing bugs
 #### Handling exemptions, e.g.:
