@@ -34,3 +34,4 @@ Use TailwindCSS for styling.
 Each HTML file should link to distinct JS files (main.js for index.html and journal.js for journal.html).
 You might want to take a look into this one for having multiple HTML entry files in Parcel
 Use Parcel for bundling JavaScript files.
+

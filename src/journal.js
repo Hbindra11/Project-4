@@ -1,3 +1,4 @@
+import {deleteNotes} from "../localStorageOperations.js";
 // URL for movie poster images
 const imgUrl = "https://image.tmdb.org/t/p/w500";
 // Select the movie list container
@@ -38,6 +39,18 @@ for (const data of FavouriteMovies) {
     "font-bold"
   );
   addNotesBtn.textContent = "Add Notes";
+  //create a button to remove the notes added against a movie
+  const deleteNotesBtn = document.createElement("button");
+  deleteNotesBtn.classList.add(
+    "bg-gray-600",
+    "text-gray-50",
+    "p-1",
+    "rounded",
+    "text-base",
+    "font-bold",
+    "m-2"
+  );
+  deleteNotesBtn.textContent = "Delete Notes";
 
   // Create the favorite movie title element for the card
   const movieTitle = document.createElement("div");
@@ -59,7 +72,7 @@ for (const data of FavouriteMovies) {
     JSON.parse(localStorage.getItem("MyNotes")) || [];
   const movieNotes = document.createElement("div");
   for (const note of MyFavouriteMovieNotes) {
-    if (note.noteTitle === data.title) {
+    if (note.noteTitle === data.title && note.myNotes !== null) {
       movieNotes.classList.add("text-base", "pb-0.5", "italic");
       movieNotes.innerText = movieNotes.innerText + " " + note.myNotes;
     }
@@ -74,6 +87,7 @@ for (const data of FavouriteMovies) {
   movieCard.appendChild(movieRating);
   movieCard.appendChild(movieNotes);
   movieCard.appendChild(addNotesBtn);
+  movieCard.appendChild(deleteNotesBtn);
 
   // On the event of clicking the add notes button, show a prompt to allow users to enter notes
   addNotesBtn.addEventListener("click", () => {
@@ -83,8 +97,9 @@ for (const data of FavouriteMovies) {
         " here: ",
       "your notes"
     );
+
     // Check if notes were entered
-    if (notes != "your notes") {
+    if (notes !== null) {
       console.log(`My notes on ${moviePoster.alt}: ` + notes);
       console.log("Testing notes: ", notes);
       const obj = { noteTitle: moviePoster.alt, myNotes: notes };
@@ -102,5 +117,18 @@ for (const data of FavouriteMovies) {
     } else {
       console.log("No notes");
     }
+  });
+
+  // on event of clicking the delete notes button, delete the notes added against a movie
+  deleteNotesBtn.addEventListener("click", () => {
+    console.log("Delete notes button clicked");
+deleteNotes(moviePoster.alt);
+    const link = document.createElement("a");
+    const paragraph = document.createElement("p");
+    link.classList.add("hover:underline");
+    link.innerText = "Click here to refresh screen to see your notes disappear";
+    link.href = "journal.html";
+    movieCard.appendChild(paragraph);
+    movieCard.appendChild(link);
   });
 }
