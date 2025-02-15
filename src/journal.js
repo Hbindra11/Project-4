@@ -1,4 +1,4 @@
-import {deleteNotes} from "../localStorageOperations.js";
+import { deleteNotes } from "../localStorageOperations.js";
 // URL for movie poster images
 const imgUrl = "https://image.tmdb.org/t/p/w500";
 // Select the movie list container
@@ -12,14 +12,13 @@ for (const data of FavouriteMovies) {
   // Create the favorite movie card element
   const movieCard = document.createElement("div");
   movieCard.classList.add(
-    "basis-1/5",
-    "container",
-    "max-auto",
-    "m-3",
-    "border-solid",
-    "border-2",
+    "movie-card",
     "bg-white",
-    "rounded"
+    "rounded-lg",
+    "shadow-md",
+    "p-4",
+    "hover:shadow-lg",
+    "transition-shadow"
   );
 
   // Create the favorite movie image element to place inside the card
@@ -31,26 +30,36 @@ for (const data of FavouriteMovies) {
   // Create the button element for adding notes through the favorite movie card
   const addNotesBtn = document.createElement("button");
   addNotesBtn.classList.add(
-    "bg-gray-600",
-    "text-gray-50",
-    "p-1",
+    "bg-blue-500",
+    "text-white",
+    "py-2",
+    "px-4",
     "rounded",
-    "text-base",
-    "font-bold"
+    "mr-2"
   );
   addNotesBtn.textContent = "Add Notes";
   //create a button to remove the notes added against a movie
   const deleteNotesBtn = document.createElement("button");
   deleteNotesBtn.classList.add(
-    "bg-gray-600",
-    "text-gray-50",
-    "p-1",
+    "bg-blue-500",
+    "text-white",
+    "py-2",
+    "px-4",
     "rounded",
-    "text-base",
-    "font-bold",
-    "m-2"
+    "mr-2"
   );
   deleteNotesBtn.textContent = "Delete Notes";
+
+  // create a button for updating the notes added against a movie
+  const updateNotesBtn = document.createElement("button");
+  updateNotesBtn.classList.add(
+    "bg-blue-500",
+    "text-white",
+    "py-2",
+    "px-4",
+    "rounded"
+  );
+  updateNotesBtn.textContent = "Update Notes";
 
   // Create the favorite movie title element for the card
   const movieTitle = document.createElement("div");
@@ -73,10 +82,10 @@ for (const data of FavouriteMovies) {
   const movieNotes = document.createElement("div");
   for (const note of MyFavouriteMovieNotes) {
     if (note.noteTitle === data.title && note.myNotes !== null) {
-      movieNotes.classList.add("text-base", "pb-0.5", "italic");
       movieNotes.innerText = movieNotes.innerText + " " + note.myNotes;
     }
   }
+  movieNotes.classList.add("text-base", "pb-0.5", "italic", "font-serif");
   movieNotes.innerText = "My Notes: " + movieNotes.innerText;
 
   // Build the card as it should be displayed
@@ -88,6 +97,7 @@ for (const data of FavouriteMovies) {
   movieCard.appendChild(movieNotes);
   movieCard.appendChild(addNotesBtn);
   movieCard.appendChild(deleteNotesBtn);
+  movieCard.appendChild(updateNotesBtn);
 
   // On the event of clicking the add notes button, show a prompt to allow users to enter notes
   addNotesBtn.addEventListener("click", () => {
@@ -121,8 +131,9 @@ for (const data of FavouriteMovies) {
 
   // on event of clicking the delete notes button, delete the notes added against a movie
   deleteNotesBtn.addEventListener("click", () => {
+    
     console.log("Delete notes button clicked");
-deleteNotes(moviePoster.alt);
+    deleteNotes(moviePoster.alt);
     const link = document.createElement("a");
     const paragraph = document.createElement("p");
     link.classList.add("hover:underline");
@@ -130,5 +141,37 @@ deleteNotes(moviePoster.alt);
     link.href = "journal.html";
     movieCard.appendChild(paragraph);
     movieCard.appendChild(link);
+  });
+
+
+  // on event of clicking the update notes button, update the notes added against a movie
+  updateNotesBtn.addEventListener("click", () => {
+    let notes = window.prompt(
+      "Please update your notes about your favorite movie: " +
+        moviePoster.alt +
+        " here: ",
+      "your notes"
+    );
+    if (notes !== null) {
+      console.log(`My notes on ${moviePoster.alt}: ` + notes);
+      console.log("Testing notes: ", notes);
+      const obj = { noteTitle: moviePoster.alt, myNotes: notes };
+      const FavouriteMovieNotes =
+        JSON.parse(localStorage.getItem("MyNotes")) || [];
+      const updatedNotes = FavouriteMovieNotes.filter(
+        (note) => note.noteTitle !== moviePoster.alt
+      );
+      updatedNotes.push(obj);
+      localStorage.setItem("MyNotes", JSON.stringify(updatedNotes));
+      const link = document.createElement("a");
+      const paragraph = document.createElement("p");
+      link.classList.add("hover:underline");
+      link.innerText = "Click here to refresh screen to see your notes updated";
+      link.href = "journal.html";
+      movieCard.appendChild(paragraph);
+      movieCard.appendChild(link);
+    } else {
+      console.log("No notes");
+    }
   });
 }

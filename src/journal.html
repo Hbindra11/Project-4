@@ -9,20 +9,23 @@
   <body class="bg-gray-100">
     <!-- Page title for My Movie Journal page -->
     <header class="bg-gray-800 text-white p-5 flex justify-center items-center">
-      <h1 class="text-3xl font-bold italic">My Movie Journal</h1>
+      <h1 class="text-3xl font-bold ">My Movie Journal</h1>
     </header>
-    <!-- Navigation bar-->
-    <nav class="bg-gray-800 text-white">
-      <div class="container mx-auto px-4 py-3 flex justify-end">
-        <a href="index.html" class="hover:underline">Go to Homepage</a>
+    <!-- Navigation bar with links to Home and Journal pages -->
+    <nav class="bg-gray-800 text-white p-4">
+      <div class="container mx-auto flex justify-between">
+          <div class="ml-auto flex space-x-4">
+              <a href="index.html" class="hover:underline">Home</a>
+              <a href="journal.html" class="hover:underline">Journal</a>
+          </div>
       </div>
-    </nav>
+  </nav>
 
     <main class="p-5">
       <!-- Building the list of favorite movies and notes begins here -->
       <div
         id="movie-list"
-        class="container mx-auto px-8 py-3 flex flex-wrap justify-start m-5 "
+        class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 "
       ></div>
     </main>
     <script type="module" src="journal.js"></script>
